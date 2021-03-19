@@ -10,18 +10,24 @@ use Symfony\Component\Routing\Annotation\Route;
 //je creer la class article controller qui herite lui mm de la classe abstractController qui est par default dans symfony
 class ArticlesController extends AbstractController
 {
+//    je donne un nom et une route a ma fonction avec l'annotation @Route
     /**
      * @Route ("/", name="index")
      */
+//    ma fonction public  en parametre la metode articleRepository crée par doctrine
     public function Index(ArticleRepository $articleRepository)
     {
+//        je creer une requete SQL avec la metode findBY et je mes ma requetes dans une vacriable article
         $articles = $articleRepository->findBy(
+//            j'affiche que les article avec 1 dans mon champ published
             ['isPublished' => 1],
+//            je trie mes articles par date de creation du recent au plus ancien
             ['createAt' => 'DESC'],2
         );
 
 
-
+//      je renvoi a ma vue mes données traiter avec la methode render qui sont dans ma variable. je la renome
+//        article dans twig
         return $this->render('index.html.twig', ['articles' => $articles]);
 
     }
@@ -45,11 +51,12 @@ class ArticlesController extends AbstractController
     /**
      * @Route("/article/{id}", name="display_article")
      */
+//    je met en parametre la fonciotn articleRepository qui est dans doctrine
     public function DisplayArticle(ArticleRepository $articleRepository, $id)
     {
-
+//je fais ma requete en base de donné avec find qui recupere les article trié par ID
         $articles = $articleRepository->find($id);
-
+//methode render renvoi a ma vue les varibles que je lui mets dans un tableau
         return $this->render('article.html.twig',['article' => $articles]);
 
     }

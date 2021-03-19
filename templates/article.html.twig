@@ -1,15 +1,20 @@
+{#je rappel ma page base.html.twig #}
 {% extends "base.html.twig" %}
 
 
-
+{#tout ce qui est dans block va etre mis a la vue#}
     {% block main %}
-
+{#j'affiche le titre de mon article#}
         <h2>{{ article.title }}</h2>
+{#j'affiche la descrption de mes articles#}
         <p>{{ article.content }}</p>
-        <span>{{ article.createAt|date("F jS \\a\\t g:ia")  }}</span>
+{#je recupere la date de creation et je l'affiche avec une methode twig #}
+        <span>{{ article.createAt|date("F jS \\a\\t g:ia", "Europe/Paris")  }}</span>
         <div class="logoArticles">
+{#j'affiche l'url de mes images#}
         <img class="resp" src="{{ asset (article.image)}}" alt="{{ asset (article.title) }}">
         </div>
+{#je ferme le block #}
     {% endblock %}
 
 

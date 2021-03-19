@@ -1,16 +1,21 @@
+{#je recuepre ma vue que j'ai dans mon fichier base.html.twig #}
 {% extends "base.html.twig" %}
-
+{#je mets a ma vue mes données dans le block main#}
 {% block main %}
 
-
+{#je creer une boucle qui me permet d'afficher mes donnée de mon tableau article#}
      {% for article in articles %}
          <div class="rangement">
+            {#j'affiche les titres de mes articles#}
              <h2>{{ article.title }}</h2>
              <div class="logoArticles">
+            {#j'affiche l'url de chaque image#}
                  <img class="resp" src="{{ article.image }}" alt="{{ article.title }}">
              </div>
+            {#j'affiche le contenue de chaque artcle#}
              <p>{{ article.content }}</p>
          </div>
+{#je ferme ma boucle#}
      {% endfor %}
-
+{#je ferme le block main#}
 {% endblock %}
