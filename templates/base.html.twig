@@ -1,0 +1,33 @@
+{#je creer une page qui sera appelé sur toute les autres#}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>produit</title>
+    <link rel="stylesheet"  href="{{asset ('css/style.css')}}">
+
+</head>
+<body>
+
+
+    <header>
+        <div class="logoHeader">
+            <img class="resp" src={{ asset("img/logoDarty.png")}}  alt="logo darty">
+        </div>
+        <ul>
+            <li><a href="{{ path('index') }}">accueil</a></li>
+            <li><a href="{{ path('display_articles') }}">article</a></li>
+        </ul>
+    </header>
+{#les elements qui sont diffrents sur le autres pages seront dans les elements block#}
+    {% block main %} {%endblock%}
+
+
+    <footer>
+    <p>
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores blanditiis, corporis cum cumque deserunt error eum illum ipsa laborum magnam minus necessitatibus nihil quis reprehenderit, rerum sequi sunt unde voluptatem?
+    </p>
+</footer>
+</body>
+</html>

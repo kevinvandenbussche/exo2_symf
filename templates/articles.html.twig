@@ -1,0 +1,23 @@
+{#je rappel ma page base.html.twig #}
+{% extends "base.html.twig" %}
+{#tout ce qui est dans block va etre mis a la vue#}
+{% block main %}
+    <article>
+{#je creer une boucle pour afficher les données  #}
+        {% for article in articles %}
+            <div class="rangement">
+{#jaffiche le titre qui correspond au champ title de ma table article de chaque tableau#}
+                <a href="{{ path('display_article',{'id' : article.id})}}">
+                <h2>{{ article.title }}</h2>
+{#jaffiche le champ de description de ma table article#}
+                    <p>{{ article.content }}</p>
+                    <div class="logoArticles">
+{#j'affiche le champ image de ma table article#}
+                        <img class="resp" src="{{ asset (article.image)}}" alt="{{ article.title }}">
+
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </article>
+{% endblock %}

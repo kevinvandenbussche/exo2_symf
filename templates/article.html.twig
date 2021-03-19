@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+
+
+
+    {% block main %}
+
+        <h2>{{ article.title }}</h2>
+        <p>{{ article.content }}</p>
+        <span>{{ article.createAt|date("F jS \\a\\t g:ia")  }}</span>
+        <div class="logoArticles">
+        <img class="resp" src="{{ asset (article.image)}}" alt="{{ asset (article.title) }}">
+        </div>
+    {% endblock %}
+
+

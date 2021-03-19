@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block main %}
+
+
+     {% for article in articles %}
+         <div class="rangement">
+             <h2>{{ article.title }}</h2>
+             <div class="logoArticles">
+                 <img class="resp" src="{{ article.image }}" alt="{{ article.title }}">
+             </div>
+             <p>{{ article.content }}</p>
+         </div>
+     {% endfor %}
+
+{% endblock %}

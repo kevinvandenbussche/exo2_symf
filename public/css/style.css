@@ -1,0 +1,44 @@
+header{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 2px;
+
+}
+
+
+.logoHeader{
+
+    width: 10%;
+}
+
+.resp{
+    height: auto;
+    width: 100%;
+}
+
+ul{
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+    list-style-type: none;
+}
+
+li{
+    padding: 5%;
+}
+
+.logoArticles{
+    width: 20%;
+}
+
+article{
+    display: flex;
+    flex-wrap: wrap;
+    padding: 5%;
+}
+
+.rangement{
+    width: 50%;
+}
