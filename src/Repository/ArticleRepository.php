@@ -18,33 +18,26 @@ class ArticleRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Article::class);
     }
-
-    // /**
-    //  * @return Article[] Returns an array of Article objects
-    //  */
-    /*
-    public function findByExampleField($value)
+//je creer une methode findSearch qui a en parametres $search
+    public function findSearch($search)
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+//        j'utilise la methode createQueryBuilder qui me permet travailler avec la base de donné
+//        je le met dans une variables
+//        'a' est le nom de ma table
+        $queryBuilder = $this->createQueryBuilder('a');
+//je creer une requete avec doctrine, une fois ma requete creé et executé je la mets dans une variable
+        $query = $queryBuilder
+//           je selectionne dans ma table
+            ->select('a')
+//            je met des condition et je cherche dans mon champ content
+            ->where('a.content LIKE :search')
+//            setParameter permet de proteger ma base de donné car elle enleve tout les caractere qui pourrait etre
+//                dangereux pour la base de donnée
+            ->setParameter( 'search', '%'.$search.'%')
+//            je recupere la requete
+            ->getQuery();
 
-    /*
-    public function findOneBySomeField($value): ?Article
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+//je renvoi ma requete
+        return $query->getresult();
     }
-    */
 }

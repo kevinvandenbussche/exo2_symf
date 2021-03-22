@@ -6,6 +6,7 @@ namespace App\Controller;
 use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
 
 //je creer la class article controller qui herite lui mm de la classe abstractController qui est par default dans symfony
 class ArticlesController extends AbstractController
@@ -46,12 +47,13 @@ class ArticlesController extends AbstractController
         ]);
 
     }
+
 //        je creer une route avec /article et lui donne le nom display_article et j'utilise une wild card pour
 //        recuperer les id de ma base de donné
     /**
      * @Route("/article/{id}", name="display_article")
      */
-//    je met en parametre la fonciotn articleRepository qui est dans doctrine
+//    je met en parametre la foncion articleRepository qui est dans doctrine
     public function DisplayArticle(ArticleRepository $articleRepository, $id)
     {
 //je fais ma requete en base de donné avec find qui recupere les article trié par ID
@@ -60,4 +62,23 @@ class ArticlesController extends AbstractController
         return $this->render('article.html.twig',['article' => $articles]);
 
     }
+
+
+    /**
+     * @Route ("/search", name="search_articles")
+     */
+    public function Search(Request $request, ArticleRepository $articleRepository)
+    {
+//        je recupere les données du parametre get
+        $search = $request->query->get('search');
+//      je met les données du parametres get dans ma methode 'findSearch' pour les traiter avec la base de donné
+        $articles = $articleRepository->findSearch($search);
+//        une fois les données traité je les renvoie a ma vue
+        return $this->render('articles.html.twig',
+            ['articles' => $articles]
+        );
+
+    }
+
 }
+

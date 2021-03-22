@@ -18,7 +18,13 @@
         <ul>
             <li><a href="{{ path('index') }}">accueil</a></li>
             <li><a href="{{ path('display_articles') }}">article</a></li>
+            <li>
+                <form action="{{ path("search_articles") }}" method="get">
+                    <input type="text" name="search">
+                </form>
+            </li>
         </ul>
+
     </header>
 {#les elements qui sont diffrents sur le autres pages seront dans les elements block#}
     {% block main %} {%endblock%}
