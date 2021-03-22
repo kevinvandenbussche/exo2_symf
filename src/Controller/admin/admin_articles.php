@@ -4,6 +4,8 @@
 namespace App\Controller\admin;
 
 use App\Entity\Article;
+use App\Repository\ArticleRepository;
+use Doctrine\ORM\EntityManager;
 use Doctrine \ ORM \ EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,5 +40,26 @@ class admin_articles extends AbstractController
         $entityManagerInterface->flush($article);
 //si les donnée sont bien envoyé j'envoi l'utilisateur sur une nouvelle page
         return $this->render('admin.article.html.twig');
+    }
+//je cree une nouvelle route et un nm pour ma fonction
+    /**
+     * @Route ("admin/update/articles/{id}", name="update_article")
+     */
+//    je fait heriter a ma fonction des methodes des class articlerepository et entitymanager que j'instencie dans des variables
+//j'utilise une wild card qui me permet d'utiliser la donnée qui est dans l'URL (id de ma donnée)
+    public function updateArticle(ArticleRepository $articleRepository, EntityManagerInterface $entityManager, $id)
+    {
+//je met dans une variable ma requete de doctrine, j'utilise la méthode find
+        $article= $articleRepository->find($id);
+//je modifie que le champs content de ma donné
+        $article->setContent('nouveau text');
+//je pres sauvegarde ma donnée(mais cela n'est pas necessaire car elle deja passé par doctrine lors du find
+        $entityManager->persist($article);
+//j'envoi ma donnée modifié
+        $entityManager->flush($article);
+//je renvoie mon utilisateur vers une page
+        return $this->render('admin.article.update.html.twig',[
+            'article'=>$article
+        ]);
     }
 }
