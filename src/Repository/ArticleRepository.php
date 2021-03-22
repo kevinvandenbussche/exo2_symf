@@ -32,7 +32,7 @@ class ArticleRepository extends ServiceEntityRepository
 //            je met des condition et je cherche dans mon champ content
             ->where('a.content LIKE :search')
 //            setParameter permet de proteger ma base de donné car elle enleve tout les caractere qui pourrait etre
-//                dangereux pour la base de donnée
+//            dangereux pour la base de donnée
             ->setParameter( 'search', '%'.$search.'%')
 //            je recupere la requete
             ->getQuery();
