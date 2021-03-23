@@ -13,7 +13,7 @@
 
     <header>
         <div class="logoHeader">
-            <img class="resp" src={{ asset("img/logoDarty.png")}}  alt="logo darty">
+            <img class="resp" src="{{ asset("img/logoDarty.png")}}" alt="logo Darty">
         </div>
         <ul>
             <li><a href="{{ path('index') }}">accueil</a></li>
@@ -28,8 +28,16 @@
         </ul>
 
     </header>
-{#les elements qui sont diffrents sur le autres pages seront dans les elements block#}
-    {% block main %} {%endblock%}
+    {% for message in app.flashes('success') %}
+        <div class="flash">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    {#les elements qui sont diffrents sur le autres pages seront dans les elements block#}
+    {% block main %}
+
+    {%endblock%}
 
 
     <footer>

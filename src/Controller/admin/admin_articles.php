@@ -5,7 +5,6 @@ namespace App\Controller\admin;
 
 use App\Entity\Article;
 use App\Repository\ArticleRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine \ ORM \ EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
@@ -37,7 +36,7 @@ class admin_articles extends AbstractController
 //je dit a doctrine de memorise le nouvelle objet
         $entityManagerInterface->persist($article);
 //        doctine envoi l'objet en base de donné
-        $entityManagerInterface->flush($article);
+        $entityManagerInterface->flush();
 //si les donnée sont bien envoyé j'envoi l'utilisateur sur une nouvelle page
         return $this->render('admin.article.html.twig');
     }
@@ -56,7 +55,7 @@ class admin_articles extends AbstractController
 //je pres sauvegarde ma donnée(mais cela n'est pas necessaire car elle deja passé par doctrine lors du find
         $entityManager->persist($article);
 //j'envoi ma donnée modifié
-        $entityManager->flush($article);
+        $entityManager->flush();
 //je renvoie mon utilisateur vers une page
         return $this->render('admin.article.update.html.twig', [
             'article' => $article
@@ -76,11 +75,16 @@ class admin_articles extends AbstractController
 //jutilise une d'entity manager qui me permet de supprimer une data
        $entityManager->remove($article);
 //       jenvoi ma requete en base de donné
-       $entityManager->flush($article);
-//je renvoi l'utilisateur sur une nouvelle page
-       return $this->render('admin.delete.article.html.twig');
+       $entityManager->flush();
+//j'utilise une methode qui me permet d'afficher un message
+        $this->addFlash(
+            'success',
+            'L\'article a été supprimé'
+        );
 
+        return $this->redirectToRoute("display_articles");
     }
+
 //je creer une route et je donne un nom a ma methode
     /**
      * @Route ("admin/display/articles", name="display_articles")
@@ -95,5 +99,7 @@ class admin_articles extends AbstractController
             'articles'=>$articles
             ]);
     }
+
+
 
 }
