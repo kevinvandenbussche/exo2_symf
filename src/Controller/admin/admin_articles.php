@@ -80,7 +80,20 @@ class admin_articles extends AbstractController
 //je renvoi l'utilisateur sur une nouvelle page
        return $this->render('admin.delete.article.html.twig');
 
-
+    }
+//je creer une route et je donne un nom a ma methode
+    /**
+     * @Route ("admin/display/articles", name="display_articles")
+     */
+//    ma fonction herite de la methode articlerepository que j'instancie et que je mets dans une variable
+    public function displayArticle(ArticleRepository $articleRepository)
+    {
+//je creer une requete symfony qui me prend toute les data de ma bdd
+        $articles=$articleRepository->findAll();
+//je renvoie a la vue avec un fichier twig toutes mes data
+        return $this->render('admin.display.html.twig',[
+            'articles'=>$articles
+            ]);
     }
 
 }
