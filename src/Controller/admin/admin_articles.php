@@ -8,6 +8,7 @@ use App\Form\ArticleType;
 use App\Repository\ArticleRepository;
 use Doctrine \ ORM \ EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 //je creer une entité avec pour parent abstract controller
@@ -19,15 +20,28 @@ class admin_articles extends AbstractController
      */
 //    je creer un fonction qui va gerer l'insertion en bdd et j'instancie la methode 'entitymangerInterface' de la
 //class abstractController
-    public function insertArticle(EntityManagerInterface $entityManagerInterface)
+    public function insertArticle(EntityManagerInterface $entityManagerInterface, Request $request)
     {
+//         je creer un nouvel objet article
         $article = new Article();
-
+//  j'utilise la méthode createFrom je met le name space de class auquel je rajoute en parametre la class objet
         $form = $this->createForm(ArticleType::class, $article);
 
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $article = $form->getData();
+            $entityManagerInterface->persist($article);
+            $entityManagerInterface->flush();
+
+        }
+
+//je renvoi le tout a la vue
         return $this->render('admin.article.html.twig',[
+//            je transfrome mon objet form avec la methode createView
             'articleView'=>$form->createView()
         ]);
+
+
     }
 //je cree une nouvelle route et un nm pour ma fonction
     /**
