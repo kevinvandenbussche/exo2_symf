@@ -41,6 +41,28 @@ class Article
      * @ORM\Column(type="boolean")
      */
     private $isPublished;
+//je dis a doctrine ou chercher le repository category
+//je dis a doctrine que le OneToMany est dans l'entity category
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Category", inversedBy="articles")
+     */
+    private $category;
+
+    /**
+     * @return mixed
+     */
+    public function getCategory()
+    {
+        return $this->category;
+    }
+
+    /**
+     * @param mixed $category
+     */
+    public function setCategory($category): void
+    {
+        $this->category = $category;
+    }
 
     public function getId(): ?int
     {

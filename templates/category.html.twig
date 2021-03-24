@@ -1,0 +1,12 @@
+{% extends "base.html.twig" %}
+
+{% block main %}
+{#    je creer une boucle pour afficher les tritre des mes categories#}
+    {% for category in categories %}
+        <h2>{{ category.title }}</h2>
+{#        je creer une boucle qui me permet d'afficher les titres d'articles selon les category#}
+        {% for article in category.articles %}
+            <h2>{{ article.title}}</h2>
+        {% endfor %}
+    {% endfor %}
+{% endblock %}
