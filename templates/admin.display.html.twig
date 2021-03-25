@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+
+
+{% block main %}
+    <a href="{{ path('insert_category') }}"><h1>creer une nouvelle categorie</h1></a>
+{% for category in categories %}
+
+    <h1>{{ category.title }}</h1>
+    <a href="{{ path('delete_category',{'id' : category.id}) }}">supprimer</a>
+    <a href="{{ path('update_category',{'id' : category.id}) }}">modifier</a>
+    <p>{{ category.description }}</p>
+    <p>{{ category.createat| date("d/m/y") }}</p>
+{% endfor %}
+{% endblock %}

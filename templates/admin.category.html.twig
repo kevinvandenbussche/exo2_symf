@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+{% block main %}
+    <h2 class="display-3 text-center">creation ou modification d'article</h2>
+    {{ form_start(categoryView) }}
+    <div class="form-titre pt-5">
+        <div class="text-center display-4">
+            {{ form_label(categoryView.title) }}
+        </div>
+        <div class="text-center pt-3">
+            {{ form_widget(categoryView.title) }}
+        </div>
+    </div>
+    <div class="form-description pt-5">
+        <div class="text-center display-5">
+            {{ form_label(categoryView.description) }}
+        </div>
+        <div class="text-center pt-3">
+            {{ form_widget(categoryView.description) }}
+        </div>
+    </div>
+    <div class="form-created-at pt-5">
+        <div class="text-center display-5">
+            {{ form_label(categoryView.createAt) }}
+        </div>
+        <div class="text-center pt-3">
+            {{ form_widget(categoryView.createAt) }}
+        </div>
+    </div>
+    <div class="form-submit">
+        <div class="text-center pt-5">
+        {{ form_widget(categoryView.submit) }}
+        </div>
+    </div>
+    {{ form_end(categoryView) }}
+{% endblock %}

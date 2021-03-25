@@ -1,5 +1,30 @@
 {% extends "base.html.twig" %}
 
 {% block main %}
-    {{ form(articleView) }}
+    <span>creation ou modification d'article</span>
+    {{ form_start(articleView) }}
+    <div class="form-titre">
+        {{ form_label(articleView.title)}}
+        {{ form_widget(articleView.title) }}
+    </div>
+    <div class="form-content">
+        {{ form_label(articleView.content)}}
+        {{ form_widget(articleView.content) }}
+    </div>
+    <div class="form-image">
+        {{ form_label(articleView.image)}}
+        {{ form_widget(articleView.image) }}
+    </div>
+    <div class="form-created-at">
+        {{ form_label(articleView.createAt)}}
+        {{ form_widget(articleView.createAt) }}
+    </div>
+    <div class="form-is-published">
+        {{ form_label(articleView.isPublished)}}
+        {{ form_widget(articleView.isPublished) }}
+    </div>
+    <div class="form-submit">
+        {{ form_widget(articleView.submit) }}
+    </div>
+    {{ form_end(articleView) }}
 {% endblock %}

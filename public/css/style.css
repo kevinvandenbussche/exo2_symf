@@ -49,3 +49,11 @@ article{
     background-color: red;
     text-align: center;
 }
+
+.form-titre{
+    width:100%;
+    margin: auto;
+}
+span{
+    width: 400px;
+}

@@ -26,11 +26,15 @@ class admin_articles extends AbstractController
         $article = new Article();
 //  j'utilise la méthode createFrom je met le name space de class auquel je rajoute en parametre la class objet
         $form = $this->createForm(ArticleType::class, $article);
-
+//je recupere le POST de mon formulaire
         $form->handleRequest($request);
+//      symfony verifie si les champs de mon form correspond au champ de ma bdd
         if($form->isSubmitted() && $form->isValid()){
+//            getData recupere les donnée du form
             $article = $form->getData();
+//            persist mets toute mes données dans une boite
             $entityManagerInterface->persist($article);
+//            j'envoi les données en bdd
             $entityManagerInterface->flush();
 
         }
@@ -49,21 +53,30 @@ class admin_articles extends AbstractController
      */
 //    je fait heriter a ma fonction des methodes des class articlerepository et entitymanager que j'instencie dans des variables
 //j'utilise une wild card qui me permet d'utiliser la donnée qui est dans l'URL (id de ma donnée)
-    public function updateArticle(ArticleRepository $articleRepository, EntityManagerInterface $entityManager, $id)
+    public function updateArticle(ArticleRepository $articleRepository, EntityManagerInterface $entityManager, $id, Request $request)
     {
 //je met dans une variable ma requete de doctrine, j'utilise la méthode find
         $article = $articleRepository->find($id);
-//je modifie que le champs content de ma donné
-        $article->setContent('nouveau text');
-//je pres sauvegarde ma donnée(mais cela n'est pas necessaire car elle deja passé par doctrine lors du find
-        $entityManager->persist($article);
-//j'envoi ma donnée modifié
-        $entityManager->flush();
-//je renvoie mon utilisateur vers une page
-        return $this->render('admin.article.update.html.twig', [
-            'article' => $article
-        ]);
 
+        //  j'utilise la méthode createFrom je met le name space de class auquel je rajoute en parametre la class objet
+        $form = $this->createForm(ArticleType::class, $article);
+        //      je recupere le POST de mon formulaire
+        $form->handleRequest($request);
+//      symfony verifie si les champs de mon form correspond au champ de ma bdd
+        if($form->isSubmitted() && $form->isValid()){
+//            getData recupere les donnée du form
+            $article = $form->getData();
+//            persist mets toute mes données dans une boite
+            $entityManager->persist($article);
+//            j'envoi les données en bdd
+            $entityManager->flush();
+
+        }
+        //je renvoi le tout a la vue
+        return $this->render('admin.article.html.twig',[
+        //            je transfrome mon objet form avec la methode createView
+        'articleView'=>$form->createView()
+        ]);
     }
 //    je creer une route et je donne un nom a ma methode et je rajoute une wild card pour pouvoir recupere en get
         /**
