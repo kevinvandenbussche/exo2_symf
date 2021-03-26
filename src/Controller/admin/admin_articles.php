@@ -111,7 +111,7 @@ class admin_articles extends AbstractController
 //je creer une requete symfony qui me prend toute les data de ma bdd
         $articles=$articleRepository->findAll();
 //je renvoie a la vue avec un fichier twig toutes mes data
-        return $this->render('admin.display.html.twig',[
+        return $this->render('admin.articles.display.html.twig',[
             'articles'=>$articles
             ]);
     }

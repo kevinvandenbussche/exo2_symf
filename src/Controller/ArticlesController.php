@@ -35,6 +35,8 @@ class ArticlesController extends AbstractController
 //    je creer une route et un nom pour ma fonction
     /**
      * @Route("/articles", name="display_articles")
+     * @param ArticleRepository $articleRepository
+     * @return \Symfony\Component\HttpFoundation\Response
      */
 //je creer une methode qui va traiter mes données
     public function DisplayArticles(ArticleRepository $articleRepository)

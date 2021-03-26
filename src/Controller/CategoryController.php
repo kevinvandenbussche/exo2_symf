@@ -12,6 +12,8 @@ class CategoryController extends AbstractController
 {
     /**
      * @Route("/category", name="list_category")
+     * @param CategoryRepository $categoryRepository
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function listCategory(CategoryRepository $categoryRepository)
     {

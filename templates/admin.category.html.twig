@@ -3,8 +3,12 @@
     <h2 class="display-3 text-center">creation ou modification d'article</h2>
     {{ form_start(categoryView) }}
     <div class="form-titre pt-5">
+
         <div class="text-center display-4">
-            {{ form_label(categoryView.title) }}
+            <p>{{ form_label(categoryView.title) }}</p>
+            <div class="text-center">
+                {{ form_errors(categoryView.title) }}
+            </div>
         </div>
         <div class="text-center pt-3">
             {{ form_widget(categoryView.title) }}
@@ -13,6 +17,9 @@
     <div class="form-description pt-5">
         <div class="text-center display-5">
             {{ form_label(categoryView.description) }}
+        </div>
+        <div>
+            {{ form_errors(categoryView.description) }}
         </div>
         <div class="text-center pt-3">
             {{ form_widget(categoryView.description) }}

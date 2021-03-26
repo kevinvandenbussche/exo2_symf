@@ -20,7 +20,7 @@ class AdminCategory extends AbstractController
      * @Route ("admin/display/category", name="display_category")
      *
      */
-//    j'instancie ma methode avec un heritage qui me permet d'aller chercher la bonne table
+//    je créer ma methode avec un heritage qui me permet d'aller chercher la bonne table
     public function displayCategory(CategoryRepository $categoryRepository)
     {
 //        je fais appel a doctrine pour faire une requete en base de donné qui me prend tout mes donné de ma table

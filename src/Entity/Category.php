@@ -4,6 +4,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -22,11 +23,24 @@ class Category
 
     /**
      * @ORM\Column (type="string", length=50)
+     * @Assert\NotBlank(message="veuillez remplir le champ")
+     * @Assert\Length(
+     *     min=2,
+     *     max=20,
+     *     minMessage="description trop court",
+     *     maxMessage="descritpion trop long"
+     * )
      */
     private $title;
 
     /**
-     * @ORM\Column (type="text", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
+     * @Assert\Length(
+     *     min=10,
+     *     max=255,
+     *     minMessage="description trop courte",
+     *     maxMessage="description trop longue"
+     * )
      */
     private $description;
     /**
@@ -35,6 +49,7 @@ class Category
     private $createAt;
     /**
      * @ORM\Column(type="boolean")
+     * @Assert\NotBlank(message="veuillez remplir le champ")
      */
     private $IsPlubished;
 //je dis a doctrine d'aller chercher l'entity article et avec les cardinalités j'utilise oneToMany (1category peut avoir
