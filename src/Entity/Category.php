@@ -20,6 +20,11 @@ class Category
      * @ORM\Column (type="integer")
      */
     private $id;
+    //colonne de ma base de donnée ou j'ai le nom de mon image
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $imageFilename;
 
     /**
      * @ORM\Column (type="string", length=50)
@@ -27,8 +32,8 @@ class Category
      * @Assert\Length(
      *     min=2,
      *     max=20,
-     *     minMessage="description trop court",
-     *     maxMessage="descritpion trop long"
+     *     minMessage="titre trop court",
+     *     maxMessage="titre trop long"
      * )
      */
     private $title;
@@ -43,10 +48,12 @@ class Category
      * )
      */
     private $description;
+
     /**
      * @ORM\Column (type="date")
      */
     private $createAt;
+
     /**
      * @ORM\Column(type="boolean")
      * @Assert\NotBlank(message="veuillez remplir le champ")
@@ -58,6 +65,7 @@ class Category
      * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="category")
      */
     private $articles;
+
 
     public function __construct()
 //        je creer un tableau pour ne pas ecraser les données articles
@@ -170,6 +178,22 @@ class Category
     public function setArticle($article): void
     {
         $this->article = $article;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getImageFilename()
+    {
+        return $this->imageFilename;
+    }
+
+    /**
+     * @param mixed $imageFilename
+     */
+    public function setImageFilename($imageFilename): void
+    {
+        $this->imageFilename = $imageFilename;
     }
 
 

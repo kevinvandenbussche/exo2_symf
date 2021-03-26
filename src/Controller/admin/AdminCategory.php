@@ -8,10 +8,13 @@ use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\String\Slugger\SluggerInterface;
+
 //je fais heriter mon entité de l'entité abstract controller qui est une entité de symfony
 class AdminCategory extends AbstractController
 {
@@ -34,40 +37,67 @@ class AdminCategory extends AbstractController
 //je creer une annotation qui pemet a symfony ou trouver ma méthode et je lui donne un nom
     /**
      * @Route("admin/insert/category", name="insert_category")
-     * @param Request $request
-     * @param EntityManagerInterface $entityManager
-     * @return Response
      */
 //    j'instancie ma méthode avec en parametre des méthode d'abstract controller
-    public function insertCategory(Request $request, EntityManagerInterface $entityManager)
+    public function insertCategory(SluggerInterface $slugger, Request $request, EntityManagerInterface $entityManager)
     {
-//        je creer une nouvelle entitté que je mets dans une variable
-        $category= new Category();
+//        je creer une nouvelle entité que je mets dans une variable
+        $category = new Category();
 //je creer un formulaire avec la méthode createForm
-        $form= $this->createForm(CategoryType::class, $category);
+        $form = $this->createForm(CategoryType::class, $category);
 //        avec la methode handle request je mets mes données dans le champs du formulaire
         $form->handleRequest($request);
 //        je verifie que les champs de mon formulaire sont rempli et valide
-        if($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 //            getData contient les données de mon formulaire et les relies a l'entité
             $category = $form->getData();
 //            je met mes nouvelles données dans une boite
-            $entityManager->persist($category);
-//            je les envois en base de donnée
-            $entityManager->flush();
-            $this->addFlash(
-                'success',
-                'la categorie a été creé'
-            );
+
+            // je verifei que mon formulaire soit valide
+            if ($form->isSubmitted() && $form->isValid()) {
+                //je recupere la méthode get de on entity imagefilename et je le met dans une variable
+                $imageFile = $form->get('imageFilename')->getData();
+
+                if ($imageFile) {
+                    //je recupere le nom de mon image
+                    $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    //je retire les caractere speciau qui pourrait etre dans le nom de mon image
+                    $safeFilename = $slugger->slug($originalFilename);
+                    //je cree un nom unique de mon image
+                    $newFilename = $safeFilename . '-' . uniqid() . '.' . $imageFile->guessExtension();
+                    //si le telechargement se deroule correctement je deplace l'image le fichier brochures qui est
+                    //situé dans public
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('brochures_directory'),
+                            $newFilename
+                        );
+
+                    } catch (FileException $e) {
+                        //si le telechargment ecoue j'affiche un message a l'utilisateur
+                        throw $this->createNotFoundException('l\'image ne c\'est pas telechargé');
+                    }
+
+                    $category->setImageFilename($newFilename);
+                    $entityManager->persist($category);
+///            je les envois en base de donnée
+                    $entityManager->flush();
+                    $this->addFlash(
+                        'success',
+                        'la categorie a été creé'
+                    );
+
+                }
+                // je renvoi l'utilisateur sur mon formulaire
+                return $this->redirectToRoute("insert_category");
+            }
 
         }
-//une fois les données envoyer je renvoie l'utilisateur a ma vue
-        return $this->render('admin.category.html.twig',[
+        return $this->render('admin.category.html.twig', [
 //            j'utilise createView pour transfomer l'objet createForm, pour que twig puisse l'afficher et je le met dans une variable twig
-            'categoryView'=>$form->createView()
+            'categoryView' => $form->createView()
         ]);
     }
-
     /**
      * @Route("admin/update/category/{id}", name="update_category")
      * @param Request $request

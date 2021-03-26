@@ -29,9 +29,15 @@
         <div class="text-center display-5">
             {{ form_label(categoryView.createAt) }}
         </div>
+        <div>
+            {{ form_errors(categoryView.createAt) }}
+        </div>
         <div class="text-center pt-3">
             {{ form_widget(categoryView.createAt) }}
         </div>
+        <h1>ajouter une image</h1>
+        {{ form_row(categoryView.imageFilename) }}
+
     </div>
     <div class="form-submit">
         <div class="text-center pt-5">

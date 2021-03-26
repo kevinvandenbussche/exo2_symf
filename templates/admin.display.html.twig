@@ -10,5 +10,9 @@
     <a href="{{ path('update_category',{'id' : category.id}) }}">modifier</a>
     <p>{{ category.description }}</p>
     <p>{{ category.createat| date("d/m/y") }}</p>
+    <div class="image">
+        //j'indique a twig dans quel fichier est situé mon image et je concataine avec le nom du fichier
+    <img class="resp" src="{{ asset('uploads/brochures/'~category.imageFilename) }}" alt="{{ category.title }}">
+    </div>
 {% endfor %}
 {% endblock %}
