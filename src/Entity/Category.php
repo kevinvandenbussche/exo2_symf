@@ -22,7 +22,7 @@ class Category
     private $id;
     //colonne de ma base de donnée ou j'ai le nom de mon image
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", nullable=true)
      */
     private $imageFilename;
 
